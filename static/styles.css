@@ -1,4 +1,5 @@
 .content {
+    position: relative;
     transition: 0.2s;
 }
 
@@ -6,8 +7,20 @@
     box-shadow: 0 0 0.6em 0 black;
 }
 
-.h-85 {
-    height: 85%;
+.overlay {
+    position: absolute;
+    opacity: 0;
+    transition: 0.5s;
+}
+
+.overlay-bg {
+    position: absolute;
+    background-color: black;
+    opacity: 50%;
+}
+
+.content:hover .overlay {
+    opacity: 100%;
 }
 
 img {

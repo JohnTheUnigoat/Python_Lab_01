@@ -17,10 +17,18 @@
     <div class="row">
       {% for product in products %}
       <div class="col-md-4 col-lg-3 p-2 item">
-        <div class="content border rounded h-100">
-          <img class="img-fluid h-85 w-100 border-bottom rounded-top" src="{{ product.image.url }}" alt="{{ product.name }}">
+        <div class="content card h-100">
+          <div class="overlay row m-0 h-75 w-100">
+            <div class="overlay-bg h-100 w-100 rounded-top"></div>
+            <div class="col-10 m-auto">
+              <a href="" class="btn btn-primary border-dark w-100 my-2">Buy now</a>
+              <a href="" class="btn btn-secondary border-dark w-100 my-2">Add to cart</a>
+            </div>
+          </div>
+          <img class="h-75 w-100 border-bottom rounded-top" src="{{ product.image.url }}" alt="{{ product.name }}">
           <div class="px-2 py-1">
             <h5>{{ product.name }}</h5>
+            <span>$999.99</span>
           </div>
         </div>
       </div>
