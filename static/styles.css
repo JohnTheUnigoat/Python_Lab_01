@@ -1,0 +1,15 @@
+.content {
+    transition: 0.2s;
+}
+
+.content:hover {
+    box-shadow: 0 0 0.6em 0 black;
+}
+
+.h-85 {
+    height: 85%;
+}
+
+img {
+    object-fit: cover;
+}
