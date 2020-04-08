@@ -26,15 +26,3 @@
 img {
     object-fit: cover;
 }
-
-input[type="text"], input[type="password"] {
-    text-align: center;
-    border: solid 1px #ddd;
-    /* border-radius: 0.2em; */
-    height: 100%;
-    width: 100%;
-}
-
-input[type="submit"] {
-    font-size: 1.5em;
-}

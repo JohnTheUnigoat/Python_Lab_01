@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block style %}
+<link rel="stylesheet" href="{% static "register/styles.css" %}">
+{% endblock style %}
+{% block content %}
+<h1>Create account</h1>
+
+<form method="post">
+  <table class="w-100">
+  {% csrf_token %}
+  {{ form.as_table }}
+  </table>
+  <input class="btn btn-dark w-100" type="submit" value="GO!">
+</form>
+{% endblock content %}
