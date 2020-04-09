@@ -3,6 +3,10 @@
     transition: 0.2s;
 }
 
+.item {
+    height: 20em;
+}
+
 .content:hover {
     box-shadow: 0 0 0.6em 0 black;
 }
