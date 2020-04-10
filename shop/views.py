@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
-from .forms import MyUserCreationForm
+from .forms import MyRegisterForm
 from .forms import MyLoginForm
 from django.contrib.auth.models import User
 from .models import Product
@@ -32,18 +32,14 @@ def loginView(request):
     return render(request, 'registration/login.html', {'form': form})
 
 
-def register(request):
-    # if request.user.is_authenticated:
-    #     return redirect('main')
-
-    # if request.method == 'POST':
-    #     form = MyUserCreationForm(data=request.POST)
-    #     if form.is_valid():
-    #         user = form.save()
-    #         login(request, user)
-    #         return redirect('main')
-    # else:
-    # TODO: custom registration form
-    form = MyUserCreationForm()
+def registerView(request):
+    if request.method == 'POST':
+        form = MyRegisterForm(data=request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('main')
+    else:
+        form = MyRegisterForm()
 
     return render(request, 'registration/register.html', {'form': form})

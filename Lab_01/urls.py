@@ -17,14 +17,15 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from django.contrib.auth import views as auth_views
 
 from shop import views as shopviews
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('login/', shopviews.loginView, name='login'),
-    path('', include('django.contrib.auth.urls')),
-    path('register/', shopviews.register, name='register'),
+    path('logout/', auth_views.LogoutView.as_view(), name='logout'),
+    path('register/', shopviews.registerView, name='register'),
     path('', shopviews.index, name='main')
 ]
 
