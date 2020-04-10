@@ -1,35 +1,13 @@
-{% extends 'base.html' %}
-{% load static %}
-{% block style %}
-<link rel="stylesheet" href="{% static "login/styles.css" %}">
-{% endblock style %}
-{% block content %}
-<div class="row fixed-top h-100">
-  <div class="col-10 col-md-8 col-lg-4 m-auto row border">
-  <h1 class="w-100 display-3 text-center text-muted p-2 border-bottom">Register</h1>
-  <form class="row my-3 mx-auto" method="POST">
-    {% csrf_token %}
-        <div class="col-12 p-0 mx-auto">
-          <h2>{{ form.username }}</h2>
-        </div>
-        <div class="col-12 p-0 mx-auto">
-          <h2>{{ form.password1 }}</h2>
-        </div>
-        <div class="col-12 p-0 mx-auto">
-          <h2>{{ form.password2 }}</h2>
-        </div>
-        <input class="btn btn-dark col-12 mx-auto" type="submit" value="Sign up">
-  </form>
-  {% if form.errors %}
-    {% for field in form %}
-      {% for error in field.errors %}
-      <p class="w-100 text-danger text-center">{{ error }}</p>
-      {% endfor %}
-    {% endfor %}
-    {% for error in form.non_field_errors %}
-    <p class="w-100 text-danger text-center">{{ error }}</p>
-    {% endfor %}
-  {% endif %}
-  </div>
+{% extends 'registration/base.html' %}
+{% block title %}Register{% endblock %}
+{% block form_fields %}
+<div class="col-12 p-0 mx-auto">
+  <h2>{{ form.username }}</h2>
 </div>
-{% endblock content %}
+<div class="col-12 p-0 mx-auto">
+  <h2>{{ form.password1 }}</h2>
+</div>
+<div class="col-12 p-0 mx-auto">
+  <h2>{{ form.password2 }}</h2>
+</div>
+{% endblock form_fields %}

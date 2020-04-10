@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block style %}
+<link rel="stylesheet" href="{% static "registration/styles.css" %}">
+{% endblock style %}
+{% block content %}
+<div class="row fixed-top h-100">
+  <div class="col-10 col-md-8 col-lg-4 m-auto row border">
+  <h1 class="w-100 display-3 text-center text-muted pb-3 border-bottom">
+    {% block title %}{% endblock %}
+  </h1>
+  <form class="row my-3 mx-auto" method="POST">
+    {% csrf_token %}
+    {% block form_fields %}{% endblock %}
+    <input class="btn btn-dark col-12 mx-auto" type="submit" value="Sign in">
+  </form>
+  {% if form.errors %}
+    {% for field in form %}
+      {% for error in field.errors %}
+      <p class="w-100 text-danger text-center">{{ error }}</p>
+      {% endfor %}
+    {% endfor %}
+    {% for error in form.non_field_errors %}
+    <p class="w-100 text-danger text-center">{{ error }}</p>
+    {% endfor %}
+  {% endif %}
+  </div>
+</div>
+{% endblock %}
