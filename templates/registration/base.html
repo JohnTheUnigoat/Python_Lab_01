@@ -12,7 +12,6 @@
   <form class="row my-3 mx-auto" method="POST">
     {% csrf_token %}
     {% block form_fields %}{% endblock %}
-    <input class="btn btn-dark col-12 mx-auto" type="submit" value="Sign in">
   </form>
   {% if form.errors %}
     {% for field in form %}
