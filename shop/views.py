@@ -5,6 +5,8 @@ from .forms import MyRegisterForm
 from .forms import MyLoginForm
 from django.contrib.auth.models import User
 from .models import Product
+from .models import Cart
+
 
 import pdb
 
@@ -43,3 +45,21 @@ def registerView(request):
         form = MyRegisterForm()
 
     return render(request, 'registration/register.html', {'form': form})
+
+def addToCartView(request, product_id):
+    user = request.user
+    if user.is_authenticated:
+        try:
+            product_id = int(product_id)
+        except ValueError:
+            return redirect('main')
+
+        product = Product.objects.filter(id=product_id).first()
+
+        if product is None:
+            return redirect('main')
+
+        user.cart.products.add(product)
+        user.save()
+
+    return redirect('main')

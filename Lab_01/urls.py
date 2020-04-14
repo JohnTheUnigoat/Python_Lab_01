@@ -26,7 +26,8 @@ urlpatterns = [
     path('login/', shopviews.loginView, name='login'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
     path('register/', shopviews.registerView, name='register'),
-    path('', shopviews.index, name='main')
+    path('', shopviews.index, name='main'),
+    path('addtocart/<product_id>', shopviews.addToCartView, name='addtocart'),
 ]
 
 if settings.DEBUG:

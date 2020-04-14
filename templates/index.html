@@ -14,7 +14,7 @@
     <a href="{% url 'logout' %}" class="btn btn-dark ml-2">Log out</a>
     {% else %}
     <span class="col text-left text-md-right p-0">
-      You are not logged in <b class="text-info">{{ username }}</b>
+      You are not logged in
     </span>
     <a href="{% url 'login' %}" class="btn btn-dark ml-2">Log in</a>
     <a href="{% url 'register' %}" class="btn btn-dark ml-2">Sign up</a>
@@ -30,7 +30,7 @@
           <div class="overlay-bg h-100 w-100 rounded-top"></div>
           <div class="col-10 m-auto">
             <a href="" class="btn btn-dark border-dark w-100 my-2">Buy now</a>
-            <a href="" class="btn btn-secondary btn-dark border-dark w-100 my-2">Add to cart</a>
+            <a href="addtocart/{{ product.id }}" class="btn btn-secondary btn-dark border-dark w-100 my-2">Add to cart</a>
           </div>
         </div>
         <img class="h-100 w-100 border-bottom rounded-top" src="{{ product.image.url }}" alt="{{ product.name }}">
