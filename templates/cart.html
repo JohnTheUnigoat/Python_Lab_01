@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block style %}
+<link rel="stylesheet" href="{% static 'cart/styles.css' %}">
+{% endblock style %}
+{% block content %}
+  <div class="row w-100 m-auto px-md-2 p-0">
+    <h1 class="col-10 col-md-6 mx-auto p-0 text-center text-md-left">{{ username }}'s cart</h1>
+    <div class="col-10 col-md-6 mx-auto p-0 row align-items-center">
+      {% if not username == '' %}
+      <span class="col text-left text-md-right p-0">
+        You are logged in as <span class="text-info">{{ username }}</span>
+      </span>
+      <a href="{% url 'logout' %}" class="btn btn-dark ml-2">Log out</a>
+      {% else %}
+      <span class="col text-left text-md-right p-0">
+        You are not logged in
+      </span>
+      <a href="{% url 'login' %}" class="btn btn-dark ml-2">Log in</a>
+      <a href="{% url 'register' %}" class="btn btn-dark ml-2">Sign up</a>
+      {% endif %}
+    </div>
+  </div>
+  {% for product in products %}
+  <div class="row">
+    <div class="col-3 col-lg-2 p-0 square">
+      <div class="content p-2">
+        <img class="card" src="{{ product.image.url }}" alt="{{ product.name }}">
+      </div>
+    </div>
+    <div class="col-9 col-lg-10 p-2 text-right">
+      <div class="card h-100 px-3 py-2">
+        <h2>{{ product.name }}</h2>
+        <h4>${{ product.price }}</h4>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+{% endblock content %}

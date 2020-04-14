@@ -63,3 +63,11 @@ def addToCartView(request, product_id):
         user.save()
 
     return redirect('main')
+
+def cartView(request):
+    products = request.user.cart.products.all()
+    username = request.user.username
+    return render(
+        request, 'cart.html',
+        {'products': products, 'username': username}
+    )

@@ -1,16 +1,17 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block style %}
-<link rel="stylesheet" href="{% static "main/styles.css" %}">
+<link rel="stylesheet" href="{% static 'main/styles.css' %}">
 {% endblock style %}
 {% block content %}
 <div class="row w-100 m-auto px-md-2 p-0">
-  <h1 class="col-10 col-md-6 mx-auto p-0 text-center text-md-left">This is a test</h1>
+  <h1 class="col-10 col-md-6 mx-auto p-0 text-center text-md-left">Generic shop name</h1>
   <div class="col-10 col-md-6 mx-auto p-0 row align-items-center">
     {% if not username == '' %}
     <span class="col text-left text-md-right p-0">
       You are logged in as <span class="text-info">{{ username }}</span>
     </span>
+    <a href="{% url 'cart' %}" class="btn btn-dark ml-2">My cart</a>
     <a href="{% url 'logout' %}" class="btn btn-dark ml-2">Log out</a>
     {% else %}
     <span class="col text-left text-md-right p-0">
