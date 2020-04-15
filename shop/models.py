@@ -1,7 +1,11 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
+from django.db.models.signals import pre_save
+from django.db.models.signals import pre_delete
 from django.dispatch import receiver
+
+import os
 
 import pdb
 
@@ -14,7 +18,22 @@ class Product(models.Model):
     def __str__(self):
         return self.name + " - $" + str(self.price)
 
-# TODO: impement file deletion on model delete
+@receiver(pre_delete, sender=Product)
+def delete_image_on_model_delete(sender, instance, **kwargs):
+    image = instance.image
+    if os.path.isfile(image.path):
+        os.remove(image.path)
+
+@receiver(pre_save, sender=Product)
+def delete_old_image_on_update(sender, instance, update_fields, **kwargs):
+    old_image = Product.objects.get(id=instance.id).image
+    new_image = instance.image
+
+    if old_image == new_image:
+        return
+
+    if os.path.isfile(old_image.path):
+        os.remove(old_image.path)
 
 
 
