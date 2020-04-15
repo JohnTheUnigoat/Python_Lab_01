@@ -1,6 +1,6 @@
 .square {
     position: relative;
-    width: 30%;
+    width: 100%;
 }
 
 .square::after {
@@ -9,7 +9,7 @@
     padding-bottom: 100%;
 }
 
-.content {
+.square-content {
     position: absolute;
     width: 100%;
     height: 100%;
@@ -19,4 +19,30 @@ img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+}
+
+.round {
+    border-radius: 50%;
+}
+
+.my-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+    background-color: #444;
+    color: #fff;
+    transition: 0.2s;
+}
+
+.my-btn:hover {
+    text-decoration: none;
+    background-color: #333;
+    color: #fff;
+}
+
+.my-btn:active {
+    background-color: #000;
 }

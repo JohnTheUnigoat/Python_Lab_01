@@ -78,7 +78,9 @@ def addToCartView(request, product_id):
 def cartView(request):
     productEntries = request.user.cart.productEntries.all()
     username = request.user.username
+    subtotal = sum(x.product.price * x.quantity for x in productEntries)
+
     return render(
         request, 'cart.html',
-        {'entries': productEntries, 'username': username}
+        {'entries': productEntries, 'username': username, 'subtotal': subtotal}
     )

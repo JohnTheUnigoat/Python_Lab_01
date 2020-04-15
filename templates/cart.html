@@ -1,39 +1,88 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block style %}
-<link rel="stylesheet" href="{% static 'cart/styles.css' %}">
+  <link rel="stylesheet" href="{% static 'cart/styles.css' %}">
 {% endblock style %}
 {% block content %}
-  <div class="row w-100 m-auto px-md-2 p-0">
-    <h1 class="col-10 col-md-6 mx-auto p-0 text-center text-md-left">{{ username }}'s cart</h1>
-    <div class="col-10 col-md-6 mx-auto p-0 row align-items-center">
+  <div class="row no-gutters">
+    <h1 class="col-10 col-md-6 mx-auto text-center text-md-left">
+      <a class="text-decoration-none text-primary" href="{% url 'main' %}">Generic shop name</a>
+    </h1>
+    <div class="col-10 col-md-6 mx-auto row align-items-center">
       {% if not username == '' %}
-      <span class="col text-left text-md-right p-0">
-        You are logged in as <span class="text-info">{{ username }}</span>
-      </span>
-      <a href="{% url 'logout' %}" class="btn btn-dark ml-2">Log out</a>
+        <span class="col text-left text-md-right p-0">
+          You are logged in as <span class="text-info">{{ username }}</span>
+        </span>
+        <a href="{% url 'logout' %}" class="btn btn-dark ml-2">Log out</a>
       {% else %}
-      <span class="col text-left text-md-right p-0">
-        You are not logged in
-      </span>
-      <a href="{% url 'login' %}" class="btn btn-dark ml-2">Log in</a>
-      <a href="{% url 'register' %}" class="btn btn-dark ml-2">Sign up</a>
+        <span class="col text-left text-md-right p-0">
+          You are not logged in
+        </span>
+        <a href="{% url 'login' %}" class="btn btn-dark ml-2">Log in</a>
+        <a href="{% url 'register' %}" class="btn btn-dark ml-2">Sign up</a>
       {% endif %}
     </div>
   </div>
-  {% for entry in entries %}
-  <div class="row">
-    <div class="col-3 col-lg-2 p-0 square">
-      <div class="content p-2">
-        <img class="card" src="{{ entry.product.image.url }}" alt="{{ entry.product.name }}">
+  <hr>
+  {% if entries.all %}
+    <h2 class="text-left">Shopping cart:</h2>
+    <hr>
+    {% for entry in entries %}
+      <!-- Product entry start -->
+      <div class="row no-gutters align-items-center">
+        <!-- Image -->
+        <div class="col-2 square">
+          <div class="square-content p-2">
+            <img class="round border" src="{{ entry.product.image.url }}" alt="{{ entry.product.name }}">
+          </div>
+        </div>
+        <!-- Name -->
+        <div class="col-3 pl-2">
+          <h4>{{ entry.product.name }}</h4>
+        </div>
+        <!-- Quantity -->
+        <div class="col-2">
+          <div class="row no-gutters">
+            <div class="col">
+              <div class="square">
+                <div class="square-content p-0 p-lg-2">
+                  <a href="" class="my-btn">-</a>
+                </div>
+              </div>
+            </div>
+            <div class="col row no-gutters">
+              <span class="m-auto text-center">{{ entry.quantity }}</span>
+            </div>
+            <div class="col">
+              <div class="square">
+                <div class="square-content p-0 p-lg-2">
+                  <a href="" class="my-btn">+</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Price -->
+        <div class="col-3 text-right">
+          <h5>${{ entry.product.price }}</h5>
+        </div>
+        <!-- Remove button -->
+        <div class="col-2">
+          <div class="row no-gutters justify-content-end">
+            <div class="col-4">
+              <div class="square">
+                <div class="square-content p-0 p-lg-2">
+                  <a href="" class="my-btn">X</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-    <div class="col-9 col-lg-10 p-2 text-right">
-      <div class="card h-100 px-3 py-2">
-        <h2>{{ entry.product.name }}</h2>
-        <h4>${{ entry.product.price }} x {{ entry.quantity }} = ${{ entry.totalPrice }}</h4>
-      </div>
-    </div>
-  </div>
-  {% endfor %}
+      <hr>
+    {% endfor %}
+    <h3 class="text-right">Subtotal: ${{ subtotal }}</h3>
+  {% else %}
+    <h2 class="text-center">There are no products in your cart</h2>
+  {% endif %}
 {% endblock content %}
