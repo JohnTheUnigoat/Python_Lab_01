@@ -5,6 +5,7 @@ from .forms import MyRegisterForm
 from .forms import MyLoginForm
 from django.contrib.auth.models import User
 from .models import Product
+from .models import ProductEntry
 from .models import Cart
 
 
@@ -59,15 +60,25 @@ def addToCartView(request, product_id):
         if product is None:
             return redirect('main')
 
-        user.cart.products.add(product)
-        user.save()
+        cart = user.cart;
+
+        productEntry = cart.productEntries.filter(product=product).first()
+
+        if productEntry is not None:
+            productEntry.quantity += 1
+            productEntry.save()
+        else:
+            productEntry = ProductEntry(product=product, quantity=1)
+            productEntry.save()
+            user.cart.productEntries.add(productEntry)
+            user.save()
 
     return redirect('main')
 
 def cartView(request):
-    products = request.user.cart.products.all()
+    productEntries = request.user.cart.productEntries.all()
     username = request.user.username
     return render(
         request, 'cart.html',
-        {'products': products, 'username': username}
+        {'entries': productEntries, 'username': username}
     )

@@ -5,6 +5,7 @@ from django.dispatch import receiver
 
 import pdb
 
+
 class Product(models.Model):
     name = models.CharField(max_length=255)
     image = models.ImageField(upload_to='images/')
@@ -15,9 +16,23 @@ class Product(models.Model):
 
 # TODO: impement file deletion on model delete
 
+
+
+class ProductEntry(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    quantity = models.IntegerField()
+
+    def totalPrice(self):
+        return self.product.price * self.quantity
+
+    def __str__(self):
+        return str(self.product) + ' (' + str(self.quantity) + ')'
+
+
+
 class Cart(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    products = models.ManyToManyField(Product, blank=True)
+    productEntries = models.ManyToManyField(ProductEntry, blank=True)
 
     def __str__(self):
         return self.user.username + "'s cart"
