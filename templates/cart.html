@@ -1,8 +1,8 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block style %}
+{% block head %}
   <link rel="stylesheet" href="{% static 'cart/styles.css' %}">
-{% endblock style %}
+{% endblock head %}
 {% block content %}
   <div class="row no-gutters">
     <h1 class="col-10 col-md-6 mx-auto text-center text-md-left">
@@ -46,7 +46,7 @@
             <div class="col">
               <div class="square">
                 <div class="square-content p-0 p-lg-2">
-                  <a href="" class="my-btn">-</a>
+                  <a href="decEntryQuantity/{{ entry.id }}/" class="my-btn">-</a>
                 </div>
               </div>
             </div>
@@ -56,7 +56,7 @@
             <div class="col">
               <div class="square">
                 <div class="square-content p-0 p-lg-2">
-                  <a href="" class="my-btn">+</a>
+                  <a href="incEntryQuantity/{{ entry.id }}/" class="my-btn">+</a>
                 </div>
               </div>
             </div>
@@ -72,7 +72,7 @@
             <div class="col-4">
               <div class="square">
                 <div class="square-content p-0 p-lg-2">
-                  <a href="" class="my-btn">X</a>
+                  <a href="removeProductEntry/{{ entry.id }}/" class="my-btn">X</a>
                 </div>
               </div>
             </div>

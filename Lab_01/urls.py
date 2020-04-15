@@ -27,8 +27,11 @@ urlpatterns = [
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
     path('register/', shopviews.registerView, name='register'),
     path('', shopviews.index, name='main'),
-    path('addtocart/<product_id>', shopviews.addToCartView),
-    path('cart', shopviews.cartView, name='cart'),
+    path('addtocart/<product_id>/', shopviews.addToCartView),
+    path('cart/', shopviews.cartView, name='cart'),
+    path('cart/removeProductEntry/<entry_id>/', shopviews.removeProductEntryView),
+    path('cart/incEntryQuantity/<entry_id>/', shopviews.increaseProductEntryQuantity),
+    path('cart/decEntryQuantity/<entry_id>/', shopviews.decreaseProductEntryQuantity),
 ]
 
 if settings.DEBUG:

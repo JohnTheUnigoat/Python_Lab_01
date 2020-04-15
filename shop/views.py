@@ -11,6 +11,7 @@ from .models import Cart
 
 import pdb
 
+
 def index(request):
     context = {
         'products': Product.objects.all(),
@@ -47,6 +48,7 @@ def registerView(request):
 
     return render(request, 'registration/register.html', {'form': form})
 
+
 def addToCartView(request, product_id):
     user = request.user
     if user.is_authenticated:
@@ -75,6 +77,7 @@ def addToCartView(request, product_id):
 
     return redirect('main')
 
+
 def cartView(request):
     productEntries = request.user.cart.productEntries.all()
     username = request.user.username
@@ -84,3 +87,52 @@ def cartView(request):
         request, 'cart.html',
         {'entries': productEntries, 'username': username, 'subtotal': subtotal}
     )
+
+
+def removeProductEntryView(request, entry_id):
+    user = request.user
+
+    if not user.is_authenticated:
+        return redirect('main')
+
+    try:
+        entry = ProductEntry.objects.filter(id=entry_id).first()
+    except ValueError:
+        return redirect('cart')
+
+    if entry is not None:
+        entry.delete()
+
+    return redirect('cart')
+
+
+def increaseProductEntryQuantity(request, entry_id):
+    return changeProductEntryQuantity(request, entry_id)
+
+def decreaseProductEntryQuantity(request, entry_id):
+    return changeProductEntryQuantity(request, entry_id, True)
+
+def changeProductEntryQuantity(request, entry_id, decrease=False):
+    user = request.user
+
+    if not user.is_authenticated:
+        return redirect('main')
+
+    try:
+        entry = ProductEntry.objects.filter(id=entry_id).first()
+    except ValueError:
+        return redirect('cart')
+
+    if entry is None:
+        return redirect('cart')
+
+    if decrease:
+        if entry.quantity == 1:
+            entry.delete()
+        else:
+            entry.quantity -= 1
+    else:
+        entry.quantity += 1
+    entry.save()
+
+    return redirect('cart')
