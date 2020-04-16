@@ -1,47 +1,70 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block head %}
-<link rel="stylesheet" href="{% static 'main/styles.css' %}">
+  <link rel="stylesheet" href="{% static 'main/styles.css' %}">
+  <link rel="stylesheet" href="{% static 'styles.css' %}">
 {% endblock head %}
 {% block content %}
-<div class="row w-100 m-auto px-md-2 p-0">
-  <h1 class="col-10 col-md-6 mx-auto p-0 text-center text-md-left text-primary">Generic shop name</h1>
-  <div class="col-10 col-md-6 mx-auto p-0 row align-items-center">
-    {% if not username == '' %}
-    <span class="col text-left text-md-right p-0">
-      You are logged in as <span class="text-info">{{ username }}</span>
-    </span>
-    <a href="{% url 'cart' %}" class="btn btn-dark ml-2">My cart</a>
-    <a href="{% url 'logout' %}" class="btn btn-dark ml-2">Log out</a>
-    {% else %}
-    <span class="col text-left text-md-right p-0">
-      You are not logged in
-    </span>
-    <a href="{% url 'login' %}" class="btn btn-dark ml-2">Log in</a>
-    <a href="{% url 'register' %}" class="btn btn-dark ml-2">Sign up</a>
-    {% endif %}
-  </div>
-</div>
-<div class="row w-100 m-auto">
-  {% for product in products %}
-  <div class="col-10 mx-auto mx-md-0 col-md-4 col-lg-3 px-md-2 px-0 py-2 item">
-    <div class="content card h-100">
-      <div class="h-75 w-100 position-relative">
-        <div class="h-100 w-100 overlay row m-0">
-          <div class="overlay-bg h-100 w-100 rounded-top"></div>
-          <div class="col-10 m-auto">
-            <a href="" class="btn btn-dark border-dark w-100 my-2">Buy now</a>
-            <a href="addtocart/{{ product.id }}" class="btn btn-secondary btn-dark border-dark w-100 my-2">Add to cart</a>
+  <div class="row no-gutters align-items-start">
+    <!-- Title -->
+    <h1 class="col-12 col-md-4 col-lg-6 text-center text-md-left text-primary">Generic shop name</h1>
+    <!-- User buttons -->
+    <div class="col-12 col-md-8 col-lg-6 row no-gutters align-items-center pt-3">
+      {% if username %}
+        <div class="col-6 text-md-right px-2">
+          You are logged in as <span class="text-info">{{ username }}</span>
+        </div>
+        <div class="col-6 row no-gutters">
+          <div class="col-12 col-md-6 p-1">
+            <a href="{% url 'cart' %}" class="w-100 btn btn-dark">My cart</a>
+          </div>
+          <div class="col-12 col-md-6 p-1">
+            <a href="{% url 'logout' %}" class="w-100 btn btn-dark">Log out</a>
           </div>
         </div>
-        <img class="h-100 w-100 border-bottom rounded-top" src="{{ product.image.url }}" alt="{{ product.name }}">
-      </div>
-      <div class="px-2 pt-2">
-        <h5>{{ product.name }}</h5>
-        <span>${{ product.price }}</span>
-      </div>
+      {% else %}
+        <div class="col-6 col-md-5 text-md-right px-2">
+          You are not logged in
+        </div>
+        <div class="col-6 col-md-7 row no-gutters">
+          <div class="col-12 col-md-6 p-1">
+            <a href="{% url 'register' %}" class="w-100 btn btn-dark">Sign Up</a>
+          </div>
+          <div class="col-12 col-md-6 p-1">
+            <a href="{% url 'login' %}" class="w-100 btn btn-dark">Log in</a>
+          </div>
+        </div>
+      {% endif %}
     </div>
   </div>
+  <hr>
+  <div class="row no-gutters mx-n1">
+  {% for product in products %}
+    <div class="col-12 col-sm-6 col-md-4 col-lg-3 p-2">
+      <div class="square">
+        <div class="square-content content card">
+          <div class="h-75 overflow-hidden w-100 border-bottom position-relative">
+            <div class="h-100 w-100 overlay row m-0">
+              <div class="overlay-bg h-100 w-100 rounded-top"></div>
+              <div class="col-10 m-auto">
+                <a href="" class="btn btn-dark border-dark w-100 my-2">Buy now</a>
+                <a href="addtocart/{{ product.id }}" class="btn btn-dark border-dark w-100 my-2">Add to cart</a>
+              </div>
+            </div>
+            <img src="{{ product.image.url }}" alt="{{ product.name }}">
+          </div>
+          <div class="h-25 p-2 row no-gutters">
+            <div class="col-12 h-50">
+              <h6 class="h100 w-100">{{ product.name }}</h5>
+            </div>
+            <div class="col-12 h-50">
+              <span>${{ product.price }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   {% endfor %}
-</div>
+  </div>
+  <hr>
 {% endblock %}
