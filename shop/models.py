@@ -6,8 +6,8 @@ from django.db.models.signals import pre_delete
 from django.dispatch import receiver
 
 import os
-
 import pdb
+
 
 
 class Product(models.Model):
@@ -62,3 +62,20 @@ def on_user_create(sender, instance, created, **kwargs):
         Cart.objects.create(user=instance)
     else:
         instance.cart.save()
+
+
+
+class Order(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    productEntries = models.ManyToManyField(ProductEntry)
+
+    country = models.CharField(max_length=20, null=True)
+    city = models.CharField(max_length=20, null=True)
+    street = models.CharField(max_length=20,null=True)
+    house_number = models.IntegerField(null=True)
+    apartment_number = models.IntegerField(null=True)
+
+    phone_number = models.CharField(max_length=10)
+
+    # TODO: delete ProductEntries on Order delete\

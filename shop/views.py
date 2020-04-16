@@ -3,10 +3,12 @@ from django.contrib.auth import authenticate, login
 from django.contrib import messages
 from .forms import MyRegisterForm
 from .forms import MyLoginForm
+from .forms import OrderForm
 from django.contrib.auth.models import User
 from .models import Product
 from .models import ProductEntry
 from .models import Cart
+from .models import Order
 
 
 import pdb
@@ -79,6 +81,9 @@ def addToCartView(request, product_id):
 
 
 def cartView(request):
+    if not request.user.is_authenticated:
+        return redirect('main')
+
     productEntries = request.user.cart.productEntries.all()
     username = request.user.username
     subtotal = sum(x.product.price * x.quantity for x in productEntries)
@@ -136,3 +141,30 @@ def changeProductEntryQuantity(request, entry_id, decrease=False):
     entry.save()
 
     return redirect('cart')
+
+
+def placeOrderView(request):
+    user = request.user
+
+    if not user.is_authenticated:
+        return redirect('main')
+
+    if request.method == 'POST':
+        order = Order(user = user)
+        order.save()
+
+        productEntries = user.cart.productEntries
+        order.productEntries.set(productEntries.all())
+
+        form = OrderForm(request.POST, instance=order)
+
+        if form.is_valid():
+            form.save()
+            user.cart.productEntries.clear()
+            return redirect('main')
+        else:
+            order.delete()
+    else:
+        form = OrderForm()
+
+    return render(request, 'order.html', {'form': form})

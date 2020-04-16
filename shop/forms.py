@@ -3,8 +3,10 @@ from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from django.contrib.auth.password_validation import validate_password
+from .models import Order
 
 import pdb
+
 
 class MyLoginForm(forms.Form):
     username = forms.CharField(
@@ -31,6 +33,7 @@ class MyLoginForm(forms.Form):
         user = authenticate(username=username, password=password)
         if user is None:
             raise ValidationError('Wrong password!')
+
 
 
 class MyRegisterForm(forms.Form):
@@ -71,3 +74,24 @@ class MyRegisterForm(forms.Form):
         password = self.cleaned_data['password2']
         user = User.objects.create_user(username=username, password=password)
         return user
+
+
+
+class OrderForm(forms.ModelForm):
+    class Meta:
+        model = Order
+        fields = ['country', 'city', 'street', 'house_number', 'apartment_number', 'phone_number']
+
+    def clean_phone_number(self):
+        phone_number = self.cleaned_data['phone_number']
+
+        if not phone_number.isdecimal():
+            raise ValidationError("Phone number must contain only digits!")
+
+        if phone_number[0] != '0':
+            raise ValidationError("Phone number should start with 0!")
+
+        if len(phone_number) != 10:
+            raise ValidationError("Phone number should be 10 digits long!")
+
+        return phone_number

@@ -32,6 +32,7 @@ urlpatterns = [
     path('cart/removeProductEntry/<entry_id>/', shopviews.removeProductEntryView),
     path('cart/incEntryQuantity/<entry_id>/', shopviews.increaseProductEntryQuantity),
     path('cart/decEntryQuantity/<entry_id>/', shopviews.decreaseProductEntryQuantity),
+    path('placeOrder', shopviews.placeOrderView, name='placeOrder'),
 ]
 
 if settings.DEBUG:
