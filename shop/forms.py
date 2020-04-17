@@ -81,6 +81,14 @@ class OrderForm(forms.ModelForm):
     class Meta:
         model = Order
         fields = ['country', 'city', 'street', 'house_number', 'apartment_number', 'phone_number']
+        widgets = {
+            'country': forms.TextInput(attrs={'placeholder': 'Country'}),
+            'city': forms.TextInput(attrs={'placeholder': 'City'}),
+            'street': forms.TextInput(attrs={'placeholder': 'Street'}),
+            'house_number': forms.NumberInput(attrs={'placeholder': 'House number'}),
+            'apartment_number': forms.NumberInput(attrs={'placeholder': 'Apartment number'}),
+            'phone_number': forms.TextInput(attrs={'placeholder': 'Phone number'})
+        }
 
     def clean_phone_number(self):
         phone_number = self.cleaned_data['phone_number']

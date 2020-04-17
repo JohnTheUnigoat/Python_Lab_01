@@ -35,7 +35,7 @@ def loginView(request):
     else:
         form = MyLoginForm()
 
-    return render(request, 'registration/login.html', {'form': form})
+    return render(request, 'forms/login.html', {'form': form, 'submit': 'Sign in'})
 
 
 def registerView(request):
@@ -48,7 +48,7 @@ def registerView(request):
     else:
         form = MyRegisterForm()
 
-    return render(request, 'registration/register.html', {'form': form})
+    return render(request, 'forms/register.html', {'form': form, 'submit': 'Sign up'})
 
 
 def addToCartView(request, product_id):
@@ -167,4 +167,4 @@ def placeOrderView(request):
     else:
         form = OrderForm()
 
-    return render(request, 'order.html', {'form': form})
+    return render(request, 'forms/order.html', {'form': form, 'submit': 'Place order'})
