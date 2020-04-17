@@ -9,7 +9,6 @@ import os
 import pdb
 
 
-
 class Product(models.Model):
     name = models.CharField(max_length=255)
     image = models.ImageField(upload_to='images/')
@@ -78,4 +77,6 @@ class Order(models.Model):
 
     phone_number = models.CharField(max_length=10)
 
-    # TODO: delete ProductEntries on Order delete\
+@receiver(pre_delete, sender=Order)
+def delete_product_entries_on_delete(sender, instance, **kwargs):
+    instance.productEntries.all().delete()
